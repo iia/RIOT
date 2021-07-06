@@ -102,7 +102,11 @@ uint32_t SystemCoreClock = DEFAULT_SYSTEM_CLOCK;
 void SystemDisableWatchdog(void)
 {
     /* WDOG->TOVAL: TOVAL=0xE803 */
-    WDOG->TOVAL = WDOG_TOVAL_TOVAL(0xE803); /* Timeout value */
+    #if defined(KINETIS_SERIES_E)
+        WDOG->TOVAL = WDOG_TOVAL_TOVALLOW(0xE803); /* Timeout value */
+    #else
+        WDOG->TOVAL = WDOG_TOVAL_TOVAL(0xE803); /* Timeout value */
+    #endif
     /* WDOG->CS2: WIN=0,FLG=0,?=0,PRES=0,?=0,?=0,CLK=1 */
     WDOG->CS2 = WDOG_CS2_CLK(0x01);         /* 1-kHz clock source */
     /* WDOG->CS1: EN=0,INT=0,UPDATE=1,TST=0,DBG=0,WAIT=1,STOP=1 */
@@ -197,7 +201,12 @@ void SystemCoreClockUpdate(void)
         return;
     }
     ICSOUTClock = ICSOUTClock >> ((ICS->C2 & ICS_C2_BDIV_MASK) >> ICS_C2_BDIV_SHIFT);
-    SystemCoreClock = (ICSOUTClock / (1u + ((SIM->CLKDIV & SIM_CLKDIV_OUTDIV1_MASK) >> SIM_CLKDIV_OUTDIV1_SHIFT)));
+
+    #if defined(KINETIS_SERIES_E)
+        SystemCoreClock = (ICSOUTClock / (1u + ((SIM->BUSDIV & SIM_BUSDIV_BUSDIV_MASK) >> SIM_BUSDIV_BUSDIV_SHIFT)));
+    #else
+        SystemCoreClock = (ICSOUTClock / (1u + ((SIM->CLKDIV & SIM_CLKDIV_OUTDIV1_MASK) >> SIM_CLKDIV_OUTDIV1_SHIFT)));
+    #endif
 
 }
 

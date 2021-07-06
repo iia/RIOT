@@ -1,0 +1,12 @@
+# This board comes with OpenSDA configured with a P&E debugger application,
+# which we do not have any support for. It is possible to update your OpenSDA
+# firmware with CMSIS-DAP firmware but that doesn't seem to work. Debugging and
+# flashing works with J-Link firmware.
+
+PROGRAMMER ?= jlink
+
+JLINK_DEVICE = MKE02Z64XXX2
+JLINK_IF = SWD
+JLINK_SPEED = 4000
+JLINK_PRE_FLASH = reset
+JLINK_POST_FLASH = go

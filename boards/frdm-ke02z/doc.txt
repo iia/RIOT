@@ -1,0 +1,40 @@
+/**
+@defgroup    boards_frdm-ke02z NXP FRDM-KE02Z Board
+@ingroup     boards
+@brief       Support for the NXP FRDM-KE02Z
+
+## Overview
+The board has a KE02Z Kinetis MCU and is supported by `cpu/kinetis_common`.
+
+## Hardware
+
+![frdm-ke02z](https://www.nxp.com/assets/images/en/dev-board-image/31961_KE02Z40M_BD.jpg)
+
+| MCU              | MKE02Z64VQH2   |
+|:---------------- |:-------------- |
+| Family           | ARM Cortex-M0+ |
+| Vendor           | Freescale      |
+| RAM              | 4KiB           |
+| Flash            | 64KiB          |
+| Frequency        | 20MHz          |
+| ADC              | no             |
+| DAC              | no             |
+| GPIO             | no             |
+| I2Cs             | no             |
+| SPIs             | no             |
+| Timers           | no             |
+| UARTs            | no             |
+
+- No support for default P&E firmware application.
+- CMSIS-DAP firmware application doesn't seem to work.
+- Only option is J-Link firmware application and J-Link tools for flashing and debugging.
+- OpenOCD doesn't work with the J-Link FW app.
+
+## Updating the Booloader
+http://www.pemicro.com/opensda/
+Follow instructions on: BOOTUPDATEAPP_release_notes.txt in the archive.
+
+## Flash Firmware Application
+J-Link OpenSDA firmware application.
+https://www.segger.com/downloads/jlink/OpenSDA_FRDM-KE02Z40M
+ */

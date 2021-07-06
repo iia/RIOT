@@ -84,7 +84,12 @@ typedef uint16_t gpio_t;
 /**
  * @brief   Starting offset of CPU_ID
  */
-#define CPUID_ADDR          (&SIM->UIDMH)
+#if defined(KINETIS_SERIES_E)
+    #define CPUID_ADDR          (&SIM->UUIDH)
+#else
+    #define CPUID_ADDR          (&SIM->UIDMH)
+#endif
+
 /**
  * @brief   Length of the CPU_ID in octets
  */

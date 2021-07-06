@@ -1,0 +1,14 @@
+# Copyright (c) 2021 Ishraq Ibne Ashraf <ishraq.i.ashraf@gmail.com>
+#
+# This file is subject to the terms and conditions of the GNU Lesser
+# General Public License v2.1. See the file LICENSE in the top level
+# directory for more details.
+
+config BOARD
+    default "frdm-ke02z" if BOARD_FRDM_KE02Z
+
+config BOARD_FRDM_KE02Z
+    bool
+    default y
+    select CPU_MODEL_MKE02Z64VQH2
+    #select HAS_PERIPH_UART

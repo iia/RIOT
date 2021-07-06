@@ -142,7 +142,11 @@ ISR_VECTOR(1) const isr_t vector_cpu[CPU_IRQ_NUMOF] = {
     [LLWU_IRQn       ] = isr_llwu,            /* Low Leakage Wakeup Unit */
 #endif
 #ifdef WDOG
+#ifdef KINETIS_SERIES_E
+    [WDOG_IRQn       ] = isr_wdog_ewm,        /* WDOG Interrupt */
+#else
     [WDOG_EWM_IRQn   ] = isr_wdog_ewm,        /* WDOG/EWM Interrupt */
+#endif
 #endif
 #ifdef RNG
     [RNG_IRQn        ] = isr_rng,             /* RNG Interrupt */
@@ -270,15 +274,18 @@ ISR_VECTOR(1) const isr_t vector_cpu[CPU_IRQ_NUMOF] = {
 #endif
 #ifdef RTC
     [RTC_IRQn        ] = isr_rtc,             /* RTC interrupt */
-#  ifndef KINETIS_SERIES_EA
+#  if !defined(KINETIS_SERIES_EA) && !defined(KINETIS_SERIES_E)
     [RTC_Seconds_IRQn] = isr_rtc_seconds,     /* RTC seconds interrupt */
 #  endif
 #endif
 #ifdef PIT
 #ifdef KINETIS_CORE_Z
-#  ifdef KINETIS_SERIES_EA
+#  if defined(KINETIS_SERIES_EA)
     [PIT0_IRQn        ] = isr_pit0,             /* PIT timer channel 0 interrupt */
     [PIT1_IRQn        ] = isr_pit1,             /* PIT timer channel 1 interrupt */
+#  elif defined(KINETIS_SERIES_E)
+    [PIT_CH0_IRQn     ] = isr_pit0,             /* PIT timer channel 0 interrupt */
+    [PIT_CH1_IRQn     ] = isr_pit1,             /* PIT timer channel 1 interrupt */
 #  else
     [PIT_IRQn        ] = isr_pit,             /* PIT any channel interrupt */
 #endif
@@ -390,10 +397,16 @@ ISR_VECTOR(1) const isr_t vector_cpu[CPU_IRQ_NUMOF] = {
     [TSI0_IRQn       ] = isr_tsi0,            /* TSI0 interrupt */
 #endif
 #ifdef TPM0
+/* In Kinetis E, TPM interrupt is handled by the corresponding FTM interrupt */
+#   if !defined(KINETIS_SERIES_E)
     [TPM0_IRQn       ] = isr_tpm0,            /* TPM1 fault, overflow and channels interrupt */
+#   endif
 #endif
 #ifdef TPM1
+/* In Kinetis E, TPM interrupt is handled by the corresponding FTM interrupt */
+#   if !defined(KINETIS_SERIES_E)
     [TPM1_IRQn       ] = isr_tpm1,            /* TPM1 fault, overflow and channels interrupt */
+#   endif
 #endif
 #ifdef TPM2
     [TPM2_IRQn       ] = isr_tpm2,            /* TPM2 fault, overflow and channels interrupt */

@@ -145,6 +145,21 @@ else ifeq ($(KINETIS_SERIES),W)
 else ifeq ($(KINETIS_SERIES),EA)
   KINETIS_RAMSIZE = $(KINETIS_ROMSIZE)/8
   KINETIS_SRAM_L_SIZE = $(KINETIS_RAMSIZE)/4
+else ifeq ($(KINETIS_SERIES),E)
+  ifeq ($(KINETIS_FAMILY), 0)
+    ifeq ($(KINETIS_SUBFAMILY), 2)
+      ifeq ($(KINETIS_CORE), Z)
+        ifeq ($(KINETIS_ROMSIZE), 16)
+          KINETIS_RAMSIZE = 2
+        else ifeq ($(KINETIS_ROMSIZE), 32)
+          KINETIS_RAMSIZE = 4
+        else ifeq ($(KINETIS_ROMSIZE), 64)
+          KINETIS_RAMSIZE = 4
+        endif
+      endif
+    endif
+  endif
+  KINETIS_SRAM_L_SIZE = $(KINETIS_RAMSIZE)/4
 endif
 export KINETIS_RAMSIZE
 export KINETIS_SRAM_L_SIZE

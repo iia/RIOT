@@ -1,0 +1,7 @@
+# define the cpu used by the board
+CPU = kinetis
+CPU_MODEL = mke02z64vqh2
+
+# Put defined MCU peripherals here (in alphabetical order)
+#FEATURES_PROVIDED += periph_gpio
+FEATURES_PROVIDED += periph_uart
